@@ -55,6 +55,17 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             }
             return true;
         }
+
+        QStringList operands;
+        operands << "+" << "-" << "^" << "/" << "*";
+
+        if(operands.contains(keyEvent->text()) && comboBox->currentText().isEmpty())
+        {
+            m_current = comboBox->count() - 1;
+            comboBox->setCurrentIndex(m_current);
+            comboBox->setEditText("(" + comboBox->currentText() + ")" + keyEvent->text());
+            return true;
+        }
     }
 
     return false;
