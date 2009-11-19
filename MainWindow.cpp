@@ -72,10 +72,13 @@ void MainWindow::compute()
 
 void MainWindow::display()
 {
-    textEdit->insertHtml("<p><tt>" +
-                         m_process.readAllStandardError() +
-                         m_process.readAllStandardOutput() +
-                         "</tt></p>");
+    QByteArray err = m_process.readAllStandardError();
+    QByteArray out = m_process.readAllStandardOutput();
+
+    out.replace("\\\n", "");
+    err.replace("\\\n", "");
+
+    textEdit->insertHtml("<p><tt>" + out + err + "</tt></p>");
     textEdit->insertPlainText("\n");
     scrollToEnd();
 }
