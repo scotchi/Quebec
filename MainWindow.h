@@ -13,6 +13,7 @@ protected:
 private slots:
     void compute();
     void display();
+    void scrollToEnd();
 private:
     QProcess m_process;
     int m_current;

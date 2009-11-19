@@ -1,5 +1,6 @@
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QScrollBar>
 #include <QDebug>
 #include "MainWindow.h"
 
@@ -66,6 +67,7 @@ void MainWindow::compute()
     m_process.write(comboBox->currentText().toLatin1() + "\n");
     comboBox->lineEdit()->clear();
     m_current = comboBox->count();
+    scrollToEnd();
 }
 
 void MainWindow::display()
@@ -75,5 +77,10 @@ void MainWindow::display()
                          m_process.readAllStandardOutput() +
                          "</tt></p>");
     textEdit->insertPlainText("\n");
-    textEdit->ensureCursorVisible();
+    scrollToEnd();
+}
+
+void MainWindow::scrollToEnd()
+{
+    textEdit->verticalScrollBar()->setSliderPosition(textEdit->verticalScrollBar()->maximum());
 }
