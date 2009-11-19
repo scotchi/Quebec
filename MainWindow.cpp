@@ -74,6 +74,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 void MainWindow::compute()
 {
+    int found = comboBox->findText(comboBox->currentText());
+
+    if(found >= 0 && found != comboBox->count() - 1)
+    {
+        comboBox->removeItem(found);
+    }
+
     textEdit->insertHtml("<p><i>" + comboBox->currentText() + "</i></p>");
     textEdit->insertPlainText("\n");
     m_process.write(comboBox->currentText().toLatin1() + "\n");
