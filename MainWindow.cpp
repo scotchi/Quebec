@@ -57,9 +57,10 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
         }
 
         QStringList operands;
-        operands << "+" << "-" << "^" << "/" << "*";
+        operands << "+" << "-" << "^" << "/" << "*" << "%";
 
-        if(operands.contains(keyEvent->text()) && comboBox->currentText().isEmpty())
+        if(operands.contains(keyEvent->text()) && comboBox->currentText().isEmpty() &&
+           comboBox->count() > 0)
         {
             m_current = comboBox->count() - 1;
             comboBox->setCurrentIndex(m_current);
