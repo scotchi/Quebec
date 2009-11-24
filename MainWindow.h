@@ -14,7 +14,9 @@ private slots:
     void compute();
     void display();
     void scrollToEnd();
+    void restart();
 private:
     QProcess m_process;
     int m_current;
+    bool m_shuttingDown;
 };

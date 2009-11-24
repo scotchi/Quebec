@@ -4,17 +4,21 @@
 #include <QDebug>
 #include "MainWindow.h"
 
+#define BINARY "/usr/bin/bc"
+
 MainWindow::MainWindow() :
     QMainWindow(),
     m_process(this),
-    m_current(0)
+    m_current(0),
+    m_shuttingDown(false)
 {
     setupUi(this);
     statusBar()->hide();
     connect(comboBox->lineEdit(), SIGNAL(returnPressed()), this, SLOT(compute()));
     connect(&m_process, SIGNAL(readyReadStandardError()), this, SLOT(display()));
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(display()));
-    m_process.start("/usr/bin/bc");
+    connect(&m_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(restart()));
+    m_process.start(BINARY);
     comboBox->setFocus(Qt::OtherFocusReason);
     comboBox->setCompleter(0);
     comboBox->installEventFilter(this);
@@ -24,7 +28,9 @@ MainWindow::MainWindow() :
 
 MainWindow::~MainWindow()
 {
-    m_process.write("exit\n");
+    m_shuttingDown = true;
+    m_process.write("quit\n");
+    m_process.waitForFinished(1000);
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
@@ -109,4 +115,12 @@ void MainWindow::display()
 void MainWindow::scrollToEnd()
 {
     textEdit->verticalScrollBar()->setSliderPosition(textEdit->verticalScrollBar()->maximum());
+}
+
+void MainWindow::restart()
+{
+    if(!m_shuttingDown)
+    {
+        m_process.start(BINARY);
+    }
 }
