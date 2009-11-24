@@ -29,6 +29,12 @@ MainWindow::~MainWindow()
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
+    if(event->type() == QEvent::KeyPress &&
+       static_cast<QKeyEvent *>(event)->matches(QKeySequence::Copy))
+    {
+        textEdit->copy();
+    }
+
     if(object == textEdit && event->type() == QEvent::FocusIn)
     {
         comboBox->setFocus(Qt::OtherFocusReason);
