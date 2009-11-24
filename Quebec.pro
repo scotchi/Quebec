@@ -8,6 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
+ICON = quebec.icns
 HEADERS += MainWindow.h
 FORMS += MainWindow.ui
 SOURCES += main.cpp MainWindow.cpp
