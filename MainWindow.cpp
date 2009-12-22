@@ -90,6 +90,7 @@ void MainWindow::compute()
     comboBox->removeItem(comboBox->findText(text));
     comboBox->addItem(text);
 
+    textEdit->moveCursor(QTextCursor::End);
     textEdit->insertHtml("<p><i>" + text + "</i></p>");
     textEdit->insertPlainText("\n");
     m_process.write(text.toLatin1() + "\n");
@@ -107,6 +108,7 @@ void MainWindow::display()
     out.replace("\\\n", "");
     err.replace("\\\n", "");
 
+    textEdit->moveCursor(QTextCursor::End);
     textEdit->insertHtml("<p><tt>" + out + err + "</tt></p>");
     textEdit->insertPlainText("\n");
     scrollToEnd();
