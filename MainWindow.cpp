@@ -24,11 +24,6 @@ MainWindow::MainWindow() :
     comboBox->installEventFilter(this);
     textEdit->setReadOnly(true);
     textEdit->installEventFilter(this);
-
-    // These are used to hide / show the window on OS X
-
-    qApp->installEventFilter(this);
-    installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -85,22 +80,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             return true;
         }
     }
-
-#ifdef Q_WS_MAC
-
-    if(object == this && event->type() == QEvent::Close)
-    {
-        event->ignore();
-        hide();
-        return true;
-    }
-
-    if(object == qApp && event->type() == QEvent::ApplicationActivate)
-    {
-        show();
-    }
-
-#endif
 
     return false;
 }
