@@ -9,7 +9,7 @@ public:
     MainWindow();
     ~MainWindow();
 protected:
-    bool eventFilter(QObject *object, QEvent *event);
+    virtual bool eventFilter(QObject *object, QEvent *event);
 private slots:
     void compute();
     void display();
